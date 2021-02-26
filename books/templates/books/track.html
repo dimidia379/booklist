@@ -24,13 +24,14 @@
             <p>Created by {{ track.reader }} {{ track.create_date }}</p>                        
         </div>
 
-        {% if track.liked %}
+        {% if liked %}
             <button data-status="liked" data-id="{{ track.id }}" class="like-active like-toggle" id="like-btn-{{ track.id }}">♥</button>
         {% else %}
             <button data-status="not-liked" data-id="{{ track.id }}" class="like-toggle" id="like-btn-{{ track.id }}">♥</button>
         {% endif %}
 
-        <span class="counter" id="like-cnt-{{ track.id }}">{{ track.likes_counter }}</span>    
+        <span class="counter" id="like-cnt-{{ track.id }}">{{ likes_counter }}</span>    
+        <!-- Не отображается трекер -->
 
       </div>
 
