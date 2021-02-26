@@ -1,0 +1,39 @@
+{% extends "books/layout.html" %}
+{% load static %}
+
+{% block script %}
+    <script src="{% static 'books/index.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+
+    <h1>Hello books!</h1>
+
+    <ul>
+        {% for track in tracks %}
+            <li data-id={{ track.id }} class="track-box">
+                <a href="{% url 'track' track.id %}">
+               
+                    <img src="{{ track.image}}" alt="{{ track.chapter }}" width="100px" height="100px">
+                    <p> {{ track.author }} </p>
+                    <p> {{ track.title }} </p>
+                    <p> Chapter: {{ track.chapter }} </p>
+                    <p>Created by {{ track.reader }} {{track.create_date}}</p>
+                </a>
+
+                {% if track.liked %}
+                    <button data-status="liked" data-id="{{ track.id }}" class="like-active like-toggle" id="like-btn-{{ track.id }}">♥</button>
+                {% else %}
+                    <button data-status="not-liked" data-id="{{ track.id }}" class="like-toggle" id="like-btn-{{ track.id }}">♥</button>
+                {% endif %}
+
+                <span class="counter" id="like-cnt-{{ track.id }}">{{ track.likes_counter }}</span>                 
+                
+            </li>
+        {% empty %}
+            <li>No tracks yet.</li>
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "books/layout.html" %}
+{% load static %}
+
+{% block script %}
+    <script src="{% static 'books/index.js' %}"></script>
+{% endblock %}
+
+{% block title %} {{ book.title }} {% endblock %}
+
+{% block body %}
+
+    <div>               
+        <p> {{ book.author }} </p>
+        <p> {{ book.title }} </p>       
+    </div>
+
+    <ul>
+        {% for track in tracks %}
+            <li id={{ track.id }} class="track-box">
+                <a href="{% url 'track' track.id %}">
+               
+                    <img src="{{ track.image.url}}" alt="{{ track.chapter }}" width="100px" height="100px">
+                    <p> Chapter: {{ track.chapter }} </p>
+                    <p>Created by {{ track.reader }} {{track.create_date}}</p>
+                   
+                </a>
+            </li>
+        {% empty %}
+            <li>No tracks yet.</li>
+        {% endfor %}
+    </ul>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "books/layout.html" %}
+{% load static %}
+
+{% block script %}
+    <script src="{% static 'books/index.js' %}"></script>
+{% endblock %}
+
+{% block title %} {{ writer.name }} {% endblock %}
+
+{% block body %}
+
+    <div>               
+        <p> {{ writer.name }} </p>
+    </div>
+
+    <ul>
+        {% for book in books %}
+            <li>
+                <a href="{% url 'book' book.id %}">              
+                    <p> {{ book.title }} </p>                  
+                </a>
+            </li>
+        {% empty %}
+            <li>No books yet.</li>
+        {% endfor %}
+    </ul>
+    
+{% endblock %}

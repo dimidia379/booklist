@@ -1,0 +1,40 @@
+{% extends "books/layout.html" %}
+{% load static %}
+
+{% block script %}
+    <script src="{% static 'books/index.js' %}"></script>
+{% endblock %}
+
+{% block title %} Claim {% endblock %}
+
+{% block body %}
+<h1>What book do you wanna hear?</h1>
+
+
+    {% if user.is_authenticated %}
+
+    <div>
+        <form action="{% url 'claim' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p|safe }}
+            <input class="btn btn-primary" type="submit" value="Claim">
+        </form>
+    </div>
+
+
+    {% else %}
+     <h5>You need to <a href="{% url 'login' %}"> Log in</a> to make requests.</h5>
+    {% endif %}
+
+    
+    
+{% endblock %}
+
+
+
+
+
+
+        {% if user.is_authenticated %}
+        <a href="{% url 'claim' %}">Request your favorite book</a>
+        {% endif %}

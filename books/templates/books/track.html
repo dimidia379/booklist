@@ -1,0 +1,57 @@
+{% extends "books/layout.html" %}
+{% load static %}
+
+{% block script %}
+    <script src="{% static 'books/index.js' %}"></script>
+{% endblock %}
+
+{% block title %} {{ track.book }} {% endblock %}
+
+{% block body %}
+
+    <div id={{ track.id }} class="track-box">
+                
+        <img src="{{ track.image.url}}" alt="{{ track.chapter }}" width="100px" height="100px">
+        <a href="{% url 'writer' writer_id %}">{{ writer }}</a><br>
+        <a href="{% url 'book' book_id %}">{{ track.book }}</a>
+        <p> Chapter: {{ track.chapter }} </p>
+        <div>
+            <audio controls="controls">
+                <source src="{{ track.audio.url }}"  />
+            </audio>
+        </div>
+        <div>                       
+            <p>Created by {{ track.reader }} {{ track.create_date }}</p>                        
+        </div>
+
+        {% if track.liked %}
+            <button data-status="liked" data-id="{{ track.id }}" class="like-active like-toggle" id="like-btn-{{ track.id }}">♥</button>
+        {% else %}
+            <button data-status="not-liked" data-id="{{ track.id }}" class="like-toggle" id="like-btn-{{ track.id }}">♥</button>
+        {% endif %}
+
+        <span class="counter" id="like-cnt-{{ track.id }}">{{ track.likes_counter }}</span>    
+
+      </div>
+
+
+        <div class="comments"> Comments:
+            {% if comments %}
+                {% for comment in comments %}
+            <li><strong>{{ comment.create_date }} by {{ comment.user }}:</strong> {{ comment.text }}</li>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        {% if user.is_authenticated %}
+            <div class="add-comment">
+                <form class="comment-form" action="{% url 'comment' track.id %}"  method='POST'>
+                    {% csrf_token %}
+                    {{ form|safe }}
+                    <input class="btn btn-primary" type="submit" value="Add comment">
+                </form>
+            </div>
+        {% endif %}
+
+
+{% endblock %}

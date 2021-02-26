@@ -1,0 +1,31 @@
+{% extends "books/layout.html" %}
+{% load static %}
+
+{% block script %}
+    <script src="{% static 'books/index.js' %}"></script>
+{% endblock %}
+
+{% block title %} Add your track {% endblock %}
+
+{% block body %}
+
+    <h1>Add your track here</h1>
+
+    {% if user.is_authenticated %}
+    
+    <div>
+        <form class="create" action="{% url 'create' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p|safe }}
+            <input class="btn btn-primary" type="submit" value="Create">
+        </form>
+    </div>
+
+    {% else %}
+    <h5>You need to <a href="{% url 'login' %}"> Log in</a> to add your tracks.</h5>
+   {% endif %}
+
+
+
+
+{% endblock %}
