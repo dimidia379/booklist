@@ -1,0 +1,24 @@
+{% extends "books/layout.html" %}
+{% load static %}
+
+{% block script %}
+    <script src="{% static 'books/index.js' %}"></script>
+{% endblock %}
+
+{% block title %} Requested Books {% endblock %}
+
+{% block body %}
+
+<h1>Claimed books</h1>
+
+<ul>
+    {% for book in claims %}
+        <li>
+            <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }} - {{ book.count_claimants }} request(s)</a>         
+        </li> 
+    {% empty %}
+        <li>No claimed books yet.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

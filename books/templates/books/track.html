@@ -12,8 +12,20 @@
     <div id={{ track.id }} class="track-box">
                 
         <img src="{{ track.image.url}}" alt="{{ track.chapter }}" width="100px" height="100px">
-        <a href="{% url 'writer' writer_id %}">{{ writer }}</a><br>
-        <a href="{% url 'book' book_id %}">{{ track.book }}</a>
+        <a href="{% url 'writer' writer_id %}">{{ track.book.author }}</a><br>
+        <a href="{% url 'book' book_id %}">{{ track.book.title }}</a>
+        <div id="bookId" data-bookid="{{ book_id }}"></div>
+
+
+        {% if user.is_authenticated %}
+            {% if book_in_favs %}
+                <button id="favorites-btn">Book In Favorites</button>
+            {% else %}
+                <button id="favorites-btn" onclick="None">Add Book to Favorites</button>
+            {% endif %}
+        {% endif %}
+
+
         <p> Chapter: {{ track.chapter }} </p>
         <div>
             <audio controls="controls">
@@ -21,7 +33,7 @@
             </audio>
         </div>
         <div>                       
-            <p>Created by {{ track.reader }} {{ track.create_date }}</p>                        
+            <p>Created by <a href="{% url 'profile' user_id %}">{{ track.reader }}</a> {{ track.create_date }}</p>                        
         </div>
 
         {% if liked %}
@@ -31,8 +43,7 @@
         {% endif %}
 
         <span class="counter" id="like-cnt-{{ track.id }}">{{ likes_counter }}</span>    
-        <!-- Не отображается трекер -->
-
+        
       </div>
 
 

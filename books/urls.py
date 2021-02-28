@@ -14,7 +14,10 @@ urlpatterns = [
     path("tracks/<int:track_id>", views.track, name="track"),
     path("tracks/<int:track_id>/comment", views.comment, name="comment"),
     path("book/<int:book_id>", views.book, name="book"),
+    path("favorite", views.favorite, name="favorite"),
     path("writer/<int:writer_id>", views.writer, name="writer"),
+    path("user/<int:user_id>", views.profile, name="profile"),
+    path("requested", views.requested, name="requested"),
     
 
     # path("watchlist", views.watchlist, name="watchlist"),

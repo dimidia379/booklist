@@ -22,6 +22,10 @@ class Book(models.Model):
     author = models.ForeignKey("Writer", on_delete=models.CASCADE, related_name="writers", default=None)
     title = models.CharField(max_length=100)
     favorites = models.ManyToManyField("User", related_name="lovers", default=None, blank=True)
+    claimants = models.ManyToManyField("User", related_name="claimants", default=None, blank=True)
+
+    def count_claimants(self):
+        return self.claimants.count()
 
     def __str__(self):
         return self.title
@@ -46,18 +50,6 @@ class Track(models.Model):
     def __str__(self):
         return f"{self.is_published} {self.book}: chapter {self.chapter} by {self.reader}"
        
-
-
-class Claim(models.Model):
-    user = models.ForeignKey("User", on_delete=models.CASCADE, related_name="listeners", default=None)
-    create_date = models.DateTimeField(default=timezone.now)
-    book = models.ForeignKey("Book", on_delete=models.CASCADE, related_name="claimedBooks", default=None)
-    claimants = models.ManyToManyField("User", related_name="claimants", default=None, blank=True)
-    # здесь код книги а не наименование но в запросе будет именно наименование
-
-    def __str__(self):
-        return f"{self.user} wants to hear {self.book}"
-
 
 class Comment(models.Model):
     track = models.ForeignKey("Track", on_delete=models.CASCADE, related_name="comment_tracks", default=None)

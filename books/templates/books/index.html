@@ -36,4 +36,17 @@
     </ul>
 
 
+    <div id="claims">Most waiting books
+        <ul>
+            {% for book in claims %}
+                <li>
+                    <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }} - {{ book.count_claimants }} request(s)</a>         
+                </li>
+            {% empty %}
+                <li>No claimed books yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+
 {% endblock %}

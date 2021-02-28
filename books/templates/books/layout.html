@@ -19,13 +19,13 @@
             <ul class="navbar-nav mr-auto">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a data-userid="{{ user.id }}" id="profile-link" class="nav-link" href="#">{{ user.username }}</a>
+                        <a data-userid="{{ user.id }}" id="profile-link" class="nav-link" href="{% url 'profile' user.id %}">{{ user.username }}</a>                        
+                    </li>                
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
                     </li>
                 {% endif %}
-                    
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'login' %}">Log In</a>

@@ -17,7 +17,7 @@
         <form action="{% url 'claim' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p|safe }}
-            <input class="btn btn-primary" type="submit" value="Claim">
+            <input class="btn btn-primary" type="submit" value="Request">
         </form>
     </div>
 
@@ -29,12 +29,3 @@
     
     
 {% endblock %}
-
-
-
-
-
-
-        {% if user.is_authenticated %}
-        <a href="{% url 'claim' %}">Request your favorite book</a>
-        {% endif %}

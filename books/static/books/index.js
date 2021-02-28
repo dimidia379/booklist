@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', (event) => {
-  document.querySelectorAll("button").forEach(el => {
+  document.querySelectorAll(".like-toggle").forEach(el => {
       el.addEventListener('click', function( event ) {
         const id = event.target.dataset.id;
         like(id);          
@@ -41,3 +41,27 @@ return false;
 }
 
 
+
+document.addEventListener('DOMContentLoaded', function() {      
+  document.querySelector('#favorites-btn').onclick = favorite;
+});
+
+
+// Add book to favorites
+function favorite() {
+  bookId = document.querySelector("#bookId").dataset.bookid;
+  fetch('/favorite', {
+    method: 'PUT',
+    body: JSON.stringify({
+      book_id: bookId
+    })
+  })
+  .then(response => {
+    response.json();    
+  })
+  .then(result => {
+    console.log(result)
+    document.querySelector("#favorites-btn").innerText = 'Book In Favorites';
+  });  
+  return false;  
+}

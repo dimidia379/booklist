@@ -13,7 +13,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
 
 
-from .models import User, Track, Writer, Book, Claim, Comment
+from .models import User, Track, Writer, Book, Comment
 
 
 def index(request):
@@ -34,8 +34,23 @@ def index(request):
             'timestamp': track.create_date,
             'likes_counter': track.likes.count(),
             'liked': liked
-        })    
-    return render(request, "books/index.html", {'tracks': tracks})
+        })
+
+    all_books = Book.objects.all()
+    claims = []
+    for book in all_books:
+        counter = book.count_claimants()
+        if counter > 0:
+            claims.append(book)
+
+
+
+
+
+    return render(request, "books/index.html", {
+        'tracks': tracks,
+        'claims': claims
+        })
 
 
 
@@ -99,7 +114,7 @@ class TrackForm(forms.ModelForm):
         model = Track
         fields = ('book_author', 'book_title', 'chapter', 'audio', 'image')
 
-
+@login_required
 def create(request):
     if request.method == "POST":
         form = TrackForm(request.POST, request.FILES)
@@ -134,27 +149,34 @@ class CommentForm(forms.ModelForm):
         fields = ('text',)
 
 def track(request, track_id):
-    track = Track.objects.get(pk=track_id)
-    book = Book.objects.filter(title=track.book)[0]
-    book_id = book.id
-    writer = book.author
-    writer_id = Writer.objects.filter(name=writer)[0].id
+    track = Track.objects.get(pk=track_id)   
+    book_id = track.book.id
+    writer_id = track.book.author.id    
+    user_id = track.reader.id
     comments = Comment.objects.filter(track=track)
     form = CommentForm
     likes_counter = track.likes.count()
 
-    liked = False
     user = request.user
+    
+    liked = False    
     if user is not None and user in track.likes.all():
         liked = True
+
+    book_in_favs = False
+    book =  Book.objects.get(pk=book_id)
+    book_favs =book.favorites.all()
+    if user is not None and user in book_favs:
+        book_in_favs = True
     
     return render(request, "books/track.html", {
         "track": track,
-        "writer": writer,
         "book_id": book_id,
         "writer_id": writer_id,
+        "user_id": user_id,
         "comments": comments,
         "liked": liked,
+        "book_in_favs": book_in_favs,
         'likes_counter': likes_counter,
         "form": form
     })
@@ -185,7 +207,7 @@ class ClaimForm(forms.ModelForm):
     book_title = forms.CharField(required=True)   
 
     class Meta:
-        model = Claim
+        model = Book
         fields = ('book_author', 'book_title')
 
 def claim(request):
@@ -199,16 +221,14 @@ def claim(request):
 
             writer, created = Writer.objects.get_or_create(name=b_author)
             writer.save()
-            book, created = Book.objects.get_or_create(author=writer, title=b_title)
+            book = form.save(commit=False)
+            book.author = writer
+            book.title = b_title
+            
+            book.save()
+            book.claimants.add(user)
             book.save()          
 
-            claim = form.save(commit=False)
-            claim.book = book
-            claim.user = user
-            claim.create_date = timezone.now()
-            claim.save()
-            claim.claimants.add(user)
-            claim.save()
             return HttpResponseRedirect(reverse("index"))
     else:
         form = ClaimForm()
@@ -256,3 +276,60 @@ def like(request, track_id):
         return JsonResponse({
             "error": "PUT request required."
         }, status=400)
+
+
+@login_required
+def profile(request, user_id):
+    profile = User.objects.get(pk=user_id)
+    tracks = Track.objects.filter(reader=profile)
+
+    all_books = Book.objects.all()
+    books = []
+    claims = []
+    for book in all_books:
+        if profile in book.favorites.all():
+            books.append(book)
+        if profile in book.claimants.all():
+            claims.append(book)
+      
+    return render(request, "books/profile.html", {
+        "profile": profile,
+        "tracks": tracks,
+        "books": books,
+        "claims": claims
+    })
+
+
+@csrf_exempt
+@login_required
+def favorite(request):
+    user = request.user
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        if data.get("book_id") is not None:
+            book_id = data["book_id"]
+            print(book_id)
+            book = Book.objects.get(pk=book_id)
+            book.favorites.add(user)
+            book.save()
+            return JsonResponse({"message": "Successfully added to favorites."}, status=201)
+
+    # Post must be via PUT
+    else:
+        return JsonResponse({
+            "error": "PUT request required."
+        }, status=400)
+
+
+def requested(request):
+    all_books = Book.objects.all()
+    claims = []
+    for book in all_books:
+        counter = book.count_claimants()
+        if counter > 0:
+            claims.append(book)
+
+      
+    return render(request, "books/requested.html", {
+        "claims": claims
+    })
