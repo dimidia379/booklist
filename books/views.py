@@ -229,7 +229,7 @@ def claim(request):
             book.claimants.add(user)
             book.save()          
 
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("requested"))
     else:
         form = ClaimForm()
         return render(request, 'books/claim.html', {
@@ -308,7 +308,6 @@ def favorite(request):
         data = json.loads(request.body)
         if data.get("book_id") is not None:
             book_id = data["book_id"]
-            print(book_id)
             book = Book.objects.get(pk=book_id)
             book.favorites.add(user)
             book.save()
@@ -323,13 +322,34 @@ def favorite(request):
 
 def requested(request):
     all_books = Book.objects.all()
-    claims = []
+    all_claims = []
     for book in all_books:
         counter = book.count_claimants()
         if counter > 0:
-            claims.append(book)
+            all_claims.append(book)
 
-      
+    
     return render(request, "books/requested.html", {
-        "claims": claims
+        "claims": all_claims
     })
+
+
+@csrf_exempt
+@login_required
+def join_request(request):
+    user = request.user
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        if data.get("book_id") is not None:
+            book_id = data["book_id"]
+            print(book_id)
+            book = Book.objects.get(pk=book_id)
+            book.claimants.add(user)
+            book.save()
+            return JsonResponse({"message": "Successfully added to requested."}, status=201)
+
+    # Post must be via PUT
+    else:
+        return JsonResponse({
+            "error": "PUT request required."
+        }, status=400)

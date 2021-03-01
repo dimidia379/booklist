@@ -14,7 +14,7 @@
             <li data-id={{ track.id }} class="track-box">
                 <a href="{% url 'track' track.id %}">
                
-                    <img src="{{ track.image}}" alt="{{ track.chapter }}" width="100px" height="100px">
+                    <img src="{{ track.image}}" alt="{{ track.chapter }}" >
                     <p> {{ track.author }} </p>
                     <p> {{ track.title }} </p>
                     <p> Chapter: {{ track.chapter }} </p>
@@ -46,6 +46,9 @@
                 <li>No claimed books yet.</li>
             {% endfor %}
         </ul>
+
+        <a href="{% url 'requested' %}">All requested books</a>   
+
     </div>
 
 

@@ -19,9 +19,9 @@
 
         {% if user.is_authenticated %}
             {% if book_in_favs %}
-                <button id="favorites-btn">Book In Favorites</button>
+                <div style="font-style: italic;">Book In Favorites</div>
             {% else %}
-                <button id="favorites-btn" onclick="None">Add Book to Favorites</button>
+                <button id="favorites-btn" onclick="favorite()">Add Book to Favorites</button>
             {% endif %}
         {% endif %}
 

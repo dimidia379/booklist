@@ -18,6 +18,7 @@ urlpatterns = [
     path("writer/<int:writer_id>", views.writer, name="writer"),
     path("user/<int:user_id>", views.profile, name="profile"),
     path("requested", views.requested, name="requested"),
+    path("join", views.join_request, name="join_request"),
     
 
     # path("watchlist", views.watchlist, name="watchlist"),

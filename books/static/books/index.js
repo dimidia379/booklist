@@ -41,12 +41,6 @@ return false;
 }
 
 
-
-document.addEventListener('DOMContentLoaded', function() {      
-  document.querySelector('#favorites-btn').onclick = favorite;
-});
-
-
 // Add book to favorites
 function favorite() {
   bookId = document.querySelector("#bookId").dataset.bookid;
@@ -61,7 +55,26 @@ function favorite() {
   })
   .then(result => {
     console.log(result)
-    document.querySelector("#favorites-btn").innerText = 'Book In Favorites';
+    document.querySelector("#favorites-btn").style.display = 'none';
   });  
   return false;  
+}
+
+
+// Add book to waitlist
+function joinRequest(bookId) {
+  fetch('/join', {
+    method: 'PUT',
+    body: JSON.stringify({
+      book_id: bookId
+    })
+  })
+  .then(response => {
+    response.json();    
+  })
+  .then(result => {
+    console.log(result)
+    location.reload();   
+  });  
+  return false; 
 }

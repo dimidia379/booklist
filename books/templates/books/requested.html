@@ -9,16 +9,27 @@
 
 {% block body %}
 
-<h1>Claimed books</h1>
+<h1>Requested books</h1>
 
 <ul>
     {% for book in claims %}
         <li>
-            <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }} - {{ book.count_claimants }} request(s)</a>         
+            <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }}. Waiting by {{ book.count_claimants }} user(s).</a>
+
+            {% if user.is_authenticated %}
+                {% if user in book.claimants.all %}
+                    <span style="color:rgba(145, 2, 240, 0.938)" data-status="joined" data-id="{{ book.id }}">In your waiting list</span>
+                {% else %}
+                    <button onclick ="joinRequest(this.dataset.id)" class="join-btn" data-status="not-joined" data-id="{{ book.id }}">Add your voice</button>
+                {% endif %}
+            {% endif %}
+       
         </li> 
     {% empty %}
         <li>No claimed books yet.</li>
     {% endfor %}
 </ul>
+
+
 
 {% endblock %}
