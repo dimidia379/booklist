@@ -27,6 +27,16 @@
             </li>
         {% empty %}
             <li>No tracks yet.</li>
+
+            {% if user.is_authenticated %}
+                {% if user in book.claimants.all %}
+                    <div>Waiting by {{ book.count_claimants }} user(s).</div>
+                    <div data-status="joined" data-id="{{ book.id }}">In your waiting list</div>
+                {% else %}
+                    <button onclick ="joinRequest(this.dataset.id)" class="join-btn" data-status="not-joined" data-id="{{ book.id }}">Add to waiting books</button>
+                {% endif %}
+            {% endif %}
+
         {% endfor %}
     </ul>
 

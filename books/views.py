@@ -9,9 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
-
 
 from .models import User, Track, Writer, Book, Comment
 
@@ -43,13 +41,9 @@ def index(request):
         if counter > 0:
             claims.append(book)
 
-
-
-
-
     return render(request, "books/index.html", {
         'tracks': tracks,
-        'claims': claims
+        'claims': claims[:3]
         })
 
 
@@ -327,7 +321,6 @@ def requested(request):
         counter = book.count_claimants()
         if counter > 0:
             all_claims.append(book)
-
     
     return render(request, "books/requested.html", {
         "claims": all_claims

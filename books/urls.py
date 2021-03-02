@@ -21,13 +21,6 @@ urlpatterns = [
     path("join", views.join_request, name="join_request"),
     
 
-    # path("watchlist", views.watchlist, name="watchlist"),
-    # path("<int:listing_id>/add_to_watchlist", views.add_to_watchlist, name="add_to_watchlist"),
-    # path("<int:listing_id>/comment", views.comment, name="comment"),
-
-
-
-
         # API Routes
     path("like/<int:track_id>", views.like, name="like")
 ]
