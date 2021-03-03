@@ -315,15 +315,19 @@ def favorite(request):
 
 
 def requested(request):
-    all_books = Book.objects.all()
-    all_claims = []
-    for book in all_books:
+    claims = []
+    for book in Book.objects.all():
         counter = book.count_claimants()
         if counter > 0:
-            all_claims.append(book)
+            claims.append(book)
+     
+    read = []
+    for track in Track.objects.all():
+        read.append(track.book)
     
     return render(request, "books/requested.html", {
-        "claims": all_claims
+        "claims": claims,
+        "read": read
     })
 
 
