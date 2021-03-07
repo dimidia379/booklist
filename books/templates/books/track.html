@@ -24,18 +24,21 @@
                 <button id="favorites-btn" onclick="favorite()">Add Book to Favorites</button>
             {% endif %}
         {% endif %}
-
-
+        
         <p> Chapter: {{ track.chapter }} </p>
         <div>
-            <audio controls="controls">
-                <source src="{{ track.audio.url }}"  />
-            </audio>
+            {% if track.is_published %}
+                <audio controls="controls">
+                    <source src="{{ track.audio.url }}"  />
+                </audio>
+            {%else%}
+                <p>Please be patient, track is on premoderation.</p>
+            {% endif %}
         </div>
         <div>                       
             <p>Created by <a href="{% url 'profile' user_id %}">{{ track.reader }}</a> {{ track.create_date }}</p>                        
         </div>
-
+        
         {% if liked %}
             <button data-status="liked" data-id="{{ track.id }}" class="like-active like-toggle" id="like-btn-{{ track.id }}">♥</button>
         {% else %}
@@ -45,8 +48,6 @@
         <span class="counter" id="like-cnt-{{ track.id }}">{{ likes_counter }}</span>    
         
       </div>
-
-
         <div class="comments"> Comments:
             {% if comments %}
                 {% for comment in comments %}

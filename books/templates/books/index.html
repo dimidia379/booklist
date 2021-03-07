@@ -18,7 +18,7 @@
                     <p> {{ track.author }} </p>
                     <p> {{ track.title }} </p>
                     <p> Chapter: {{ track.chapter }} </p>
-                    <p>Added by {{ track.reader }} {{track.timestamp}}</p>
+                    <p>Created by {{ track.reader }} {{track.timestamp}}</p>
                 </a>
 
                 {% if track.liked %}
@@ -41,7 +41,10 @@
         <ul>
             {% for book in claims %}
                 <li>
-                    <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }} - {{ book.count_claimants }} request(s)</a>         
+                    <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }} - {{ book.count_claimants }} request(s)</a>
+                    {% if book in read %}
+                        <span class="can-hear-now">You can listen it now!</span> 
+                    {% endif %}          
                 </li>
             {% empty %}
                 <li>No claimed books yet.</li>

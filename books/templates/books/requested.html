@@ -20,28 +20,20 @@
                 {% if user in book.claimants.all %}
                     <span style="color:rgba(145, 2, 240, 0.938)" data-status="joined" data-id="{{ book.id }}">In your waiting list</span>
                 {% else %}
-                    <button onclick ="joinRequest(this.dataset.id)" class="join-btn" data-status="not-joined" data-id="{{ book.id }}">Add your voice</button>
+                    <button onclick ="joinRequest(this.dataset.id)" class="join-btn" data-status="not-joined" data-id="{{ book.id }}">Join awaiting</button>
                 {% endif %}
             {% endif %}
 
             {% if book in read %}
-            You can hear it now! 
+                <span class="can-hear-now">You can listen it now!</span> 
             {% endif %}       
         </li> 
     {% empty %}
         <li>No claimed books yet.</li>
     {% endfor %}
+    
+    <a href="{% url 'claim' %}"><h5>Add your own request</h2></a>
 
-    <div>
-        <h5>Add your own request</h2>
-
-        <form action="{% url 'claim' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p|safe }}
-            <input class="btn btn-primary" type="submit" value="Request">
-        </form>  
-
-    </div>
 </ul>
 
 

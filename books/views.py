@@ -41,9 +41,14 @@ def index(request):
         if counter > 0:
             claims.append(book)
 
+    read = []
+    for track in row_tracks:
+        read.append(track.book)
+
     return render(request, "books/index.html", {
         'tracks': tracks,
-        'claims': claims[:3]
+        'claims': claims[:3],
+        'read': read
         })
 
 
@@ -285,12 +290,17 @@ def profile(request, user_id):
             books.append(book)
         if profile in book.claimants.all():
             claims.append(book)
+
+    read = []
+    for track in Track.objects.all():
+        read.append(track.book)
       
     return render(request, "books/profile.html", {
         "profile": profile,
         "tracks": tracks,
         "books": books,
-        "claims": claims
+        "claims": claims,
+        "read": read
     })
 
 

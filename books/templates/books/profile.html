@@ -19,7 +19,7 @@
                 <p> {{ track.book.author }} </p>
                 <p> {{ track.book }} </p>
                 <p> Chapter: {{ track.chapter }} </p>
-                <p>Added {{track.create_date}}</p>
+                <p>Created {{track.create_date}}</p>
             </a>         
         </li>
     {% empty %}
@@ -42,7 +42,10 @@
 <ul>
     {% for book in claims %}
         <li>
-            <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }}</a>         
+            <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }}</a>
+            {% if book in read %}
+                <span class="can-hear-now">You can listen it now!</span> 
+            {% endif %}          
         </li> 
     {% empty %}
         <li>No claimed books yet.</li>
