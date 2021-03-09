@@ -17,12 +17,14 @@
     <div class="main-link">
         <a href="{% url 'create' %}">Add your record</a>
     </div>
-    <div class="main-link">
-        <a href="{% url 'login' %}">Log In</a>
-    </div>
-    <div class="main-link">
-        <a href="{% url 'register' %}">Register</a>
-    </div>
+    {% if not user.is_authenticated %}
+        <div class="main-link">
+            <a href="{% url 'login' %}">Log In</a>
+        </div>
+        <div class="main-link">
+            <a href="{% url 'register' %}">Register</a>
+        </div>
+    {% endif %}
     <img class="main-img" src="media/images/main4.jpg" class="background" />
 </div>
 

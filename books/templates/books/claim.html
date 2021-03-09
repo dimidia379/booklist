@@ -1,5 +1,6 @@
 {% extends "books/layout.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block script %}
     <script src="{% static 'books/index.js' %}"></script>
@@ -16,7 +17,7 @@
     <div>
         <form action="{% url 'claim' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p|safe }}
+            {{ form|crispy }}
             <input class="btn btn-primary" type="submit" value="Request">
         </form>
     </div>

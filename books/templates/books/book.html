@@ -14,7 +14,7 @@
         <p> {{ book.title }} </p>       
     </div>
 
-    <ul>
+    <ul class="book-tracks">
         {% for track in tracks %}
             <li id={{ track.id }} class="track-box">
                 <a href="{% url 'track' track.id %}">
@@ -33,7 +33,7 @@
                     <div>Waiting by {{ book.count_claimants }} user(s).</div>
                     <div data-status="joined" data-id="{{ book.id }}">In your waiting list</div>
                 {% else %}
-                    <button onclick ="joinRequest(this.dataset.id)" class="join-btn" data-status="not-joined" data-id="{{ book.id }}">Add to waiting books</button>
+                    <button onclick ="joinRequest(this.dataset.id)" class="join-btn" data-status="not-joined" data-id="{{ book.id }}">Add to your waiting list</button>
                 {% endif %}
             {% endif %}
 

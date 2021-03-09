@@ -1,5 +1,6 @@
 {% extends "books/layout.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block script %}
     <script src="{% static 'books/index.js' %}"></script>
@@ -16,7 +17,7 @@
     <div>
         <form class="create" action="{% url 'create' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p|safe }}
+            {{ form|crispy }}
             <input class="btn btn-primary" type="submit" value="Create">
         </form>
     </div>
@@ -24,6 +25,7 @@
     {% else %}
     <h5>You need to <a href="{% url 'login' %}"> Log in</a> to add your tracks.</h5>
    {% endif %}
+   <img class="main-img" src="media/images/add.jpg" class="background" />
 
 
 

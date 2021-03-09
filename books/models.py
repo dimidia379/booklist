@@ -36,8 +36,8 @@ class Track(models.Model):
     reader = models.ForeignKey("User", on_delete=models.CASCADE, related_name="readers", default=None)
     create_date = models.DateTimeField(default=timezone.now)
     book = models.ForeignKey("Book", on_delete=models.CASCADE, related_name="all_books", default=None)
-    audio = models.FileField(upload_to='{book}/audio/', blank=True)
-    image = models.ImageField(upload_to='{book}/images/', default="images/noimage.jpg")
+    audio = models.FileField(upload_to='{book}/audio/')
+    image = models.ImageField(upload_to='{book}/images/', default="images/noimage.jpg", blank=True)
     is_published = models.BooleanField(verbose_name="Published", default=False)
     likes = models.ManyToManyField("User", related_name="likers", default=None, blank=True)
 

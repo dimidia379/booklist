@@ -1,7 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda&display=swap');
 
+.body {
+  margin-left: 10px;
+}
+
 .track-box {
     border: 1px solid grey;
+    margin: 5px;
 }
 
 .like-toggle {
@@ -60,6 +65,7 @@ img.book-img {
 
 nav.navbar {
   background-color: #94a4b2;
+  margin-bottom: 10px;
 }
 
 .main-img {
@@ -89,4 +95,19 @@ nav.navbar {
 
 #search-btn {
   color: black;
+}
+
+.book-tracks {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-primary {
+  background-color: #547796;
+  border-color: #547796;
+  margin-top: 5px;
+}
+
+.control-group {
+  margin-bottom: 10px;
 }

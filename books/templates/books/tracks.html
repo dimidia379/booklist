@@ -14,7 +14,7 @@
             <li data-id={{ track.id }} class="track-box">
                 <a href="{% url 'track' track.id %}">
                
-                    <img src="{{ track.image}}" alt="{{ track.chapter }}" >
+                    <img class="book-img" src="{{ track.image}}" alt="{{ track.chapter }}" >
                     <p> {{ track.author }} </p>
                     <p> {{ track.title }} </p>
                     <p> Chapter: {{ track.chapter }} </p>
