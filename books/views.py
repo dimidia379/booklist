@@ -52,6 +52,43 @@ def index(request):
         })
 
 
+def tracks(request):
+    tracks = []
+    user = request.user
+    row_tracks = Track.objects.filter(is_published=True).order_by("-create_date")
+    for track in row_tracks: 
+        liked = False
+        if user is not None and user in track.likes.all():
+            liked = True
+        tracks.append({
+            'id': track.id,
+            'reader': track.reader,
+            'image': track.image.url,
+            'author': track.book.author,
+            'title': track.book.title,
+            'chapter': track.chapter,
+            'timestamp': track.create_date,
+            'likes_counter': track.likes.count(),
+            'liked': liked
+        })
+
+    all_books = Book.objects.all()
+    claims = []
+    for book in all_books:
+        counter = book.count_claimants()
+        if counter > 0:
+            claims.append(book)
+
+    read = []
+    for track in row_tracks:
+        read.append(track.book)
+
+    return render(request, "books/tracks.html", {
+        'tracks': tracks,
+        'claims': claims[:3],
+        'read': read
+        })
+
 
 def login_view(request):
     if request.method == "POST":
@@ -360,3 +397,14 @@ def join_request(request):
         return JsonResponse({
             "error": "PUT request required."
         }, status=400)
+
+
+def search(request):
+    query = request.GET.get("q", "")
+    books = Book.objects.filter(title__icontains=query)
+    authors = Book.objects.filter(author__name__icontains=query)
+    results = books | authors
+    return render(request, "books/search.html", {
+			"books": results,
+			"query": query
+        })

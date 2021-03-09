@@ -13,15 +13,18 @@ urlpatterns = [
     path("claim", views.claim, name="claim"),
     path("tracks/<int:track_id>", views.track, name="track"),
     path("tracks/<int:track_id>/comment", views.comment, name="comment"),
-    path("book/<int:book_id>", views.book, name="book"),
-    path("favorite", views.favorite, name="favorite"),
+    path("book/<int:book_id>", views.book, name="book"),    
     path("writer/<int:writer_id>", views.writer, name="writer"),
     path("user/<int:user_id>", views.profile, name="profile"),
-    path("requested", views.requested, name="requested"),
-    path("join", views.join_request, name="join_request"),
+    path("requested", views.requested, name="requested"),    
+    path("tracks", views.tracks, name="tracks"),
+    path("search", views.search, name="search"),
+
     
 
         # API Routes
+    path("favorite", views.favorite, name="favorite"),
+    path("join", views.join_request, name="join_request"),
     path("like/<int:track_id>", views.like, name="like")
 ]
 

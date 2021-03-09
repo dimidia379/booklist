@@ -19,7 +19,7 @@
             <li id={{ track.id }} class="track-box">
                 <a href="{% url 'track' track.id %}">
                
-                    <img src="{{ track.image.url}}" alt="{{ track.chapter }}" width="100px" height="100px">
+                    <img class="book-img" src="{{ track.image.url}}" alt="{{ track.chapter }}" width="100px" height="100px">
                     <p> Chapter: {{ track.chapter }} </p>
                     <p>Created by {{ track.reader }} {{track.create_date}}</p>
                    

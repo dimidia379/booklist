@@ -28,7 +28,7 @@ class Book(models.Model):
         return self.claimants.count()
 
     def __str__(self):
-        return self.title
+        return f"{self.author} - {self.title}"
 
 
 class Track(models.Model):
@@ -37,11 +37,8 @@ class Track(models.Model):
     create_date = models.DateTimeField(default=timezone.now)
     book = models.ForeignKey("Book", on_delete=models.CASCADE, related_name="all_books", default=None)
     audio = models.FileField(upload_to='{book}/audio/', blank=True)
-    # нужно установить путь загрузки в зависимости от юзера либо же в отдельные папки для каждой книги сложить картинку и главы
     image = models.ImageField(upload_to='{book}/images/', default="images/noimage.jpg")
     is_published = models.BooleanField(verbose_name="Published", default=False)
-    # добавить список юзеров, прослушавших
-    # юзеры, поставившие лайк
     likes = models.ManyToManyField("User", related_name="likers", default=None, blank=True)
 
     def count_likes(self):
@@ -57,8 +54,5 @@ class Comment(models.Model):
     text = models.TextField(default=None, blank=False, verbose_name='Add your comment')
     create_date = models.DateTimeField(default=timezone.now)
 
-
-    
-
-    
-
+    def __str__(self):
+        return f"{self.user} comment for {self.track}"

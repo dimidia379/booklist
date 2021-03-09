@@ -1,0 +1,26 @@
+{% extends "books/layout.html" %}
+{% load static %}
+
+{% block script %}
+    <script src="{% static 'books/index.js' %}"></script>
+{% endblock %}
+
+{% block title %} Search results {% endblock %}
+
+{% block body %}
+
+<h1>Search results for "{{query}}"</h1>
+
+<ul>
+    {% for book in books %}
+        <li>
+            <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }}</a>         
+        </li>
+    {% empty %}
+        <li>No results</li>
+    {% endfor %}
+</ul>
+
+
+
+{% endblock %}

@@ -7,53 +7,25 @@
 
 {% block body %}
 
-    <h1>Hello books!</h1>
-
-    <ul>
-        {% for track in tracks %}
-            <li data-id={{ track.id }} class="track-box">
-                <a href="{% url 'track' track.id %}">
-               
-                    <img src="{{ track.image}}" alt="{{ track.chapter }}" >
-                    <p> {{ track.author }} </p>
-                    <p> {{ track.title }} </p>
-                    <p> Chapter: {{ track.chapter }} </p>
-                    <p>Created by {{ track.reader }} {{track.timestamp}}</p>
-                </a>
-
-                {% if track.liked %}
-                    <button data-status="liked" data-id="{{ track.id }}" class="like-active like-toggle" id="like-btn-{{ track.id }}">♥</button>
-                {% else %}
-                    <button data-status="not-liked" data-id="{{ track.id }}" class="like-toggle" id="like-btn-{{ track.id }}">♥</button>
-                {% endif %}
-
-                <span class="counter" id="like-cnt-{{ track.id }}">{{ track.likes_counter }}</span>                 
-                
-            </li>
-        {% empty %}
-            <li>No tracks yet.</li>
-        {% endfor %}
-    </ul>
-
-
-    <div id="claims">
-        <h3>Most waiting books</h3>
-        <ul>
-            {% for book in claims %}
-                <li>
-                    <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }} - {{ book.count_claimants }} request(s)</a>
-                    {% if book in read %}
-                        <span class="can-hear-now">You can listen it now!</span> 
-                    {% endif %}          
-                </li>
-            {% empty %}
-                <li>No claimed books yet.</li>
-            {% endfor %}
-        </ul>
-
-        <a href="{% url 'requested' %}">See all requested books and join to requests</a>   
-
+<div id="main-page">
+    <div id="main-logo">
+        I read U
     </div>
+    <div class="main-link">
+        <a href="{% url 'tracks' %}">Listen</a>
+    </div>
+    <div class="main-link">
+        <a href="{% url 'create' %}">Add your record</a>
+    </div>
+    <div class="main-link">
+        <a href="{% url 'login' %}">Log In</a>
+    </div>
+    <div class="main-link">
+        <a href="{% url 'register' %}">Register</a>
+    </div>
+    <img class="main-img" src="media/images/main4.jpg" class="background" />
+</div>
+
 
 
 {% endblock %}

@@ -11,7 +11,7 @@
 
     <div id={{ track.id }} class="track-box">
                 
-        <img src="{{ track.image.url}}" alt="{{ track.chapter }}" width="100px" height="100px">
+        <img class="book-img" src="{{ track.image.url}}" alt="{{ track.chapter }}" width="100px" height="100px">
         <a href="{% url 'writer' writer_id %}">{{ track.book.author }}</a><br>
         <a href="{% url 'book' book_id %}">{{ track.book.title }}</a>
         <div id="bookId" data-bookid="{{ book_id }}"></div>
