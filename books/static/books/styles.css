@@ -1,12 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Martel&display=swap');
 
 .body {
   margin-left: 10px;
 }
 
-.track-box {
-    border: 1px solid grey;
-    margin: 5px;
+body {  
+  font-family: 'Martel', serif;
+}
+
+#add-req-link {  
+  color: white;
 }
 
 .like-toggle {
@@ -29,9 +32,13 @@ ul {
   list-style-type: none;
 }
 
-a:link { 
+a { 
   color: #000000; 
   text-decoration: none}
+
+a:hover {
+  text-decoration: none;
+} 
 
 form.comment-form {
   padding: 5px;
@@ -39,7 +46,6 @@ form.comment-form {
   height: 150px;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
   
 form.comment-form>textarea {
@@ -68,33 +74,43 @@ nav.navbar {
   margin-bottom: 10px;
 }
 
+#main-page {
+  font-family: 'Amatic SC', cursive;
+}
+
 .main-img {
   float: right; 
   height: auto;
   width: 100%;
-  max-width: 720px;
+  max-width: 1020px;
+}
+
+.search-img {
+  float: left; 
+  height: auto;
+  width: 30%;
+  max-width: 360px;
 }
 
 #main-logo {
   font-size: 100px;
   font-weight: bold;
-  font-family:'Bodoni Moda', serif;  
-  text-align: center;
+  margin-left: 10%;
 }
 
 .main-link {
-  font-size: 20px;
+  font-size: 40px;
   font-weight: bold;
-  font-family:'Bodoni Moda', serif;
   border: 1px solid white;
   border-radius: 50%;
   margin-bottom: 30px;
-  text-align: center;
   color: black;
+  margin-left: 12.5%;
 }
 
 #search-btn {
   color: black;
+  border-color: grey;
 }
 
 .book-tracks {
@@ -111,3 +127,27 @@ nav.navbar {
 .control-group {
   margin-bottom: 10px;
 }
+
+#tracklist {
+  margin:0 25% 0 25%;
+  width:50%;
+}
+
+.track-box {
+  border: 1px solid grey;
+  margin: 10px;
+}
+
+.track-box-track {
+  border: 1px solid grey;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  line-height: 40px;
+}
+
+#comment-btn {
+  color: black;
+  background-color: white;
+  border: 1px 
+}
+

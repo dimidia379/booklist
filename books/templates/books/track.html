@@ -9,7 +9,7 @@
 
 {% block body %}
 
-    <div id={{ track.id }} class="track-box">
+    <div id={{ track.id }} class="track-box-track">
                 
         <img class="book-img" src="{{ track.image.url}}" alt="{{ track.chapter }}" width="100px" height="100px">
         <a href="{% url 'writer' writer_id %}">{{ track.book.author }}</a><br>
@@ -28,7 +28,7 @@
         <p> Chapter: {{ track.chapter }} </p>
         <div>
             {% if track.is_published %}
-                <audio controls="controls">
+                <audio controls="controls" controlsList="nodownload">
                     <source src="{{ track.audio.url }}"  />
                 </audio>
             {%else%}
@@ -61,7 +61,7 @@
                 <form class="comment-form" action="{% url 'comment' track.id %}"  method='POST'>
                     {% csrf_token %}
                     {{ form|safe }}
-                    <input class="btn btn-primary" type="submit" value="Add comment">
+                    <input id="comment-btn" class="btn btn-primary" type="submit" value="Add comment">
                 </form>
             </div>
         {% endif %}

@@ -56,6 +56,7 @@ function favorite() {
   .then(result => {
     console.log(result)
     document.querySelector("#favorites-btn").style.display = 'none';
+    location.reload();   
   });  
   return false;  
 }

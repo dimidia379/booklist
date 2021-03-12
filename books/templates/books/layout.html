@@ -5,7 +5,7 @@
     <head>
         <title>{% block title %}I read U{% endblock %}</title>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'books/styles.css' %}" rel="stylesheet">
 
@@ -20,6 +20,9 @@
             
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">                
+                    <a class="nav-link" href="{% url 'tracks' %}">All tracks</a>
+                </li>
+                <li class="nav-item">                
                     <a class="nav-link" href="{% url 'create' %}">Add your track</a>
                 </li>
                 <li class="nav-item">
@@ -28,17 +31,17 @@
 
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a data-userid="{{ user.id }}" id="profile-link" class="nav-link" href="{% url 'profile' user.id %}">{{ user.username }}</a>                        
+                        <a data-userid="{{ user.id }}" id="profile-link" class="nav-link" href="{% url 'profile' user.id %}">Profile</a>                        
                     </li>                
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                        <a class="nav-link" href="{% url 'logout' %}">Log out</a>
                     </li>
                 {% endif %}
 
                 {% if not user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                        <a class="nav-link" href="{% url 'login' %}">Log in</a>
                     </li>
                     
                     <li class="nav-item">
@@ -48,7 +51,7 @@
             </ul>
             <form action="{% url 'search' %}" class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
-                <button id="search-btn" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search book</button>
+                <button id="search-btn" class="btn btn-secondary" type="submit">Search book</button>
             </form>            
         </nav>
         

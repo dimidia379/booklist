@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
+from django.db.models import Count
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -12,6 +13,60 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 from .models import User, Track, Writer, Book, Comment
+
+
+def login_view(request):
+    if request.method == "POST":
+
+        # Attempt to sign user in
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+
+        # Check if authentication successful
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render(request, "books/login.html", {
+                "message": "Invalid username and/or password."
+            })
+    else:
+        return render(request, "books/login.html")
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("index"))
+
+
+def register(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        email = request.POST["email"]
+
+        # Ensure password matches confirmation
+        password = request.POST["password"]
+        confirmation = request.POST["confirmation"]
+        if password != confirmation:
+            return render(request, "books/register.html", {
+                "message": "Passwords must match."
+            })
+
+        # Attempt to create new user
+        try:
+            user = User.objects.create_user(username, email, password)
+            user.save()
+        except IntegrityError:
+            return render(request, "books/register.html", {
+                "message": "Username already taken."
+            })
+        login(request, user)
+        return HttpResponseRedirect(reverse("index"))
+    else:
+        return render(request, "books/register.html")
+
+
 
 
 def index(request):
@@ -72,74 +127,11 @@ def tracks(request):
             'liked': liked
         })
 
-    all_books = Book.objects.all()
-    claims = []
-    for book in all_books:
-        counter = book.count_claimants()
-        if counter > 0:
-            claims.append(book)
 
-    read = []
-    for track in row_tracks:
-        read.append(track.book)
 
     return render(request, "books/tracks.html", {
-        'tracks': tracks,
-        'claims': claims[:3],
-        'read': read
+        'tracks': tracks   
         })
-
-
-def login_view(request):
-    if request.method == "POST":
-
-        # Attempt to sign user in
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
-
-        # Check if authentication successful
-        if user is not None:
-            login(request, user)
-            return HttpResponseRedirect(reverse("index"))
-        else:
-            return render(request, "books/login.html", {
-                "message": "Invalid username and/or password."
-            })
-    else:
-        return render(request, "books/login.html")
-
-
-def logout_view(request):
-    logout(request)
-    return HttpResponseRedirect(reverse("index"))
-
-
-def register(request):
-    if request.method == "POST":
-        username = request.POST["username"]
-        email = request.POST["email"]
-
-        # Ensure password matches confirmation
-        password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
-        if password != confirmation:
-            return render(request, "books/register.html", {
-                "message": "Passwords must match."
-            })
-
-        # Attempt to create new user
-        try:
-            user = User.objects.create_user(username, email, password)
-            user.save()
-        except IntegrityError:
-            return render(request, "books/register.html", {
-                "message": "Username already taken."
-            })
-        login(request, user)
-        return HttpResponseRedirect(reverse("index"))
-    else:
-        return render(request, "books/register.html")
 
 
 class TrackForm(forms.ModelForm):
@@ -246,7 +238,12 @@ class ClaimForm(forms.ModelForm):
         model = Book
         fields = ('book_author', 'book_title')
 
-def claim(request):
+def claim(request):    
+    claims = Book.objects.all().annotate(num_claims=Count('claimants')).order_by('-num_claims')
+    read = []
+    for track in Track.objects.all():
+        read.append(track.book)
+
     user = request.user
     if request.method == "POST":
         form = ClaimForm(request.POST)
@@ -269,7 +266,9 @@ def claim(request):
     else:
         form = ClaimForm()
         return render(request, 'books/claim.html', {
-            'form': form
+            'form': form,
+            'claims': claims[:3],
+            'read': read
         })
 
 
@@ -278,7 +277,8 @@ def book(request, book_id):
     tracks = Track.objects.filter(book=book).order_by("-chapter")
     return render(request, "books/book.html", {
         "book": book,
-        "tracks": tracks
+        "tracks": tracks,
+        "writer_id": book.author.id
     })
 
 def writer(request, writer_id):

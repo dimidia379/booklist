@@ -9,11 +9,23 @@
 
 {% block body %}
 
-    <div>               
-        <p> {{ book.author }} </p>
-        <p> {{ book.title }} </p>       
-    </div>
+    <div>
+        <p> 
+            <a href="{% url 'writer' writer_id %}">{{ book.author }}</a>
+        </p>
+        <p> {{ book.title }} </p>
+        <div id="bookId" data-bookid="{{ book.id }}"></div>
 
+        {% if user.is_authenticated %}
+            {% if user in book.favorites.all %}
+                <div style="font-style: italic;">Book In Favorites</div>
+            {% else %}
+                <button id="favorites-btn" onclick="favorite()">Add Book to Favorites</button>
+            {% endif %}
+        {% endif %}       
+    </div>
+    <br>
+    <h3>Tracks</h3>
     <ul class="book-tracks">
         {% for track in tracks %}
             <li id={{ track.id }} class="track-box">
