@@ -8,9 +8,10 @@
 {% block title %} {{ writer.name }} {% endblock %}
 
 {% block body %}
+<div class="book-list">
 
     <div>               
-        <p> {{ writer.name }} </p>
+        <h4> {{ writer.name }} </h4>
     </div>
 
     <ul>
@@ -24,5 +25,5 @@
             <li>No books yet.</li>
         {% endfor %}
     </ul>
-    
+</div>
 {% endblock %}

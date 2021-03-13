@@ -9,6 +9,7 @@
 {% block title %} Add your track {% endblock %}
 
 {% block body %}
+<div id="request-body">
 
     <h1>Add your track here</h1>
 
@@ -25,9 +26,5 @@
     {% else %}
     <h5>You need to <a href="{% url 'login' %}"> Log in</a> to add your tracks.</h5>
    {% endif %}
-   <img class="search-img" src="media/images/add.jpg"/>
-
-
-
-
+</div>
 {% endblock %}

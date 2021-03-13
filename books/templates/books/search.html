@@ -8,19 +8,18 @@
 {% block title %} Search results {% endblock %}
 
 {% block body %}
-<img class="search-img" src="media/images/allbooks.jpg"/>
-<h1>Search results for "{{query}}"</h1>
+<div class="book-list">
 
-<ul>
-    {% for book in books %}
-        <li>
-            <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }}</a>         
-        </li>
-    {% empty %}
-        <li>No results</li>
-    {% endfor %}
-</ul>
+    <h4>Search results for "{{query}}"</h4>
 
-
-
+    <ul>
+        {% for book in books %}
+            <li>
+                <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }}</a>         
+            </li>
+        {% empty %}
+            <li>No results</li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

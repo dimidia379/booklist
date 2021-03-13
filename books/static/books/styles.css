@@ -5,7 +5,11 @@
 }
 
 body {  
-  font-family: 'Martel', serif;
+  font-family: 'Martel', serif; 
+  background-image: url("imgs/yep.jpg"); 
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
 }
 
 #add-req-link {  
@@ -26,6 +30,10 @@ body {
   outline:none;
   box-shadow:none;
   border: none;
+}
+
+.like-toggle:focus {
+  outline: none;
 }
 
 ul {
@@ -62,50 +70,46 @@ img.book-img {
   float: left; 
   width: 100px; 
   height: 150px;
+  margin: 5px;
 }
 
 .can-hear-now {
   font-style: italic;
-  color:#bb0826;
+  color:#ca4298;
 }
 
 nav.navbar {
-  background-color: #94a4b2;
-  margin-bottom: 10px;
+  background-color: #ddc8dd;
+  margin-bottom: 30px;
+  background-image: url("imgs/yep.jpg"); 
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  font-family: 'Amatic SC', cursive; 
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.navbar-brand {
+  font-size: 40px
 }
 
 #main-page {
-  font-family: 'Amatic SC', cursive;
-}
-
-.main-img {
-  float: right; 
-  height: auto;
-  width: 100%;
-  max-width: 1020px;
-}
-
-.search-img {
-  float: left; 
-  height: auto;
-  width: 30%;
-  max-width: 360px;
+  font-family: 'Amatic SC', cursive;  
 }
 
 #main-logo {
   font-size: 100px;
   font-weight: bold;
-  margin-left: 10%;
+  text-align: center;
 }
 
 .main-link {
   font-size: 40px;
   font-weight: bold;
-  border: 1px solid white;
-  border-radius: 50%;
+  text-align: center;
   margin-bottom: 30px;
-  color: black;
-  margin-left: 12.5%;
+  color: black;  
 }
 
 #search-btn {
@@ -128,26 +132,56 @@ nav.navbar {
   margin-bottom: 10px;
 }
 
-#tracklist {
-  margin:0 25% 0 25%;
-  width:50%;
+.tracklist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center; 
+  justify-content: center; 
+  overflow: auto; 
 }
 
 .track-box {
-  border: 1px solid grey;
-  margin: 10px;
+  margin: 20px;
+  padding: 10px;
 }
 
 .track-box-track {
-  border: 1px solid grey;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  text-align: center;
   line-height: 40px;
 }
 
-#comment-btn {
-  color: black;
-  background-color: white;
-  border: 1px 
+#request-body {
+  text-align: center;
 }
 
+#claims {
+  margin-top: 50px;
+}
+
+#see-all-req {
+  padding: 5px;
+  border: 1px solid grey;
+}
+
+#profile-title {
+  margin: 20px;
+}
+
+#profile-foot {
+  margin: 20px;
+  text-align: right;
+}
+
+#book-page {
+  text-align: center;
+}
+
+#book-page-tracks {
+  margin-top: 40px;
+}
+
+.book-list {
+  text-align: center; 
+  line-height: 40px;
+}

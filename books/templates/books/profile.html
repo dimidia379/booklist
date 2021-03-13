@@ -9,7 +9,7 @@
 
 {% block body %}
 
-<h1>{{profile.username}}</h1>
+<h1 id="profile-title">{{profile.username}}</h1>
 <h3>Added tracks</h3>
 <ul>
     {% for track in tracks %}
@@ -17,10 +17,9 @@
             <a href="{% url 'track' track.id %}">
            
                 <img class="book-img" src="{{ track.image.url}}" alt="{{ track.chapter }}" width="100px" height="100px">
-                <p> {{ track.book.author }} </p>
                 <p> {{ track.book }} </p>
                 <p> Chapter: {{ track.chapter }} </p>
-                <p>Created {{track.create_date}}</p>
+                <p>Created {{track.create_date}}</p>     
             </a>         
         </li>
     {% empty %}
@@ -28,29 +27,31 @@
     {% endfor %}
 </ul>
 
-<h3>Favorite books</h3>
-<ul>
-    {% for book in books %}
-        <li>
-            <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }}</a>         
-        </li>
-    {% empty %}
-        <li>No books yet.</li>
-    {% endfor %}
-</ul>
+<div id="profile-foot">
+    <h3>Favorite books</h3>
+    <ul>
+        {% for book in books %}
+            <li>
+                <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }}</a>         
+            </li>
+        {% empty %}
+            <li>No books yet.</li>
+        {% endfor %}
+    </ul>
 
-<h3>Claimed books</h3>
-<ul>
-    {% for book in claims %}
-        <li>
-            <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }}</a>
-            {% if book in read %}
-                <span class="can-hear-now">You can listen it now!</span> 
-            {% endif %}          
-        </li> 
-    {% empty %}
-        <li>No claimed books yet.</li>
-    {% endfor %}
-</ul>
+    <h3>Claimed books</h3>
+    <ul>
+        {% for book in claims %}
+            <li>
+                <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }}</a>
+                {% if book in read %}
+                    <span class="can-hear-now">You can listen it now!</span> 
+                {% endif %}          
+            </li> 
+        {% empty %}
+            <li>No claimed books yet.</li>
+        {% endfor %}
+    </ul>
+</div>
 
 {% endblock %}
