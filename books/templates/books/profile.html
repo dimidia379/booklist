@@ -39,7 +39,7 @@
         {% endfor %}
     </ul>
 
-    <h3>Claimed books</h3>
+    <h3>Requested books</h3>
     <ul>
         {% for book in claims %}
             <li>
@@ -49,7 +49,7 @@
                 {% endif %}          
             </li> 
         {% empty %}
-            <li>No claimed books yet.</li>
+            <li>No books yet.</li>
         {% endfor %}
     </ul>
 </div>

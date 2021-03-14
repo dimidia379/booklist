@@ -26,6 +26,11 @@
             <a href="{% url 'register' %}">Register</a>
         </div>
     {% endif %}
+    {% if user.is_superuser %}
+        <div class="main-link">
+            {{ new_tracks }} track(s) are waiting to publish!
+        </div>
+    {% endif %}
     
 </div>
 

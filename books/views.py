@@ -1,16 +1,16 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.db.models import Count
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse
 from django import forms
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
+import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-import json
+
 
 from .models import User, Track, Writer, Book, Comment
 
@@ -67,8 +67,6 @@ def register(request):
         return render(request, "books/register.html")
 
 
-
-
 def index(request):
     tracks = []
     user = request.user
@@ -100,10 +98,14 @@ def index(request):
     for track in row_tracks:
         read.append(track.book)
 
+    unpublished_tracks = Track.objects.filter(is_published=False)
+    new_tracks = len(unpublished_tracks)
+    
     return render(request, "books/index.html", {
         'tracks': tracks,
         'claims': claims[:3],
-        'read': read
+        'read': read,
+        'new_tracks': new_tracks
         })
 
 
@@ -126,9 +128,6 @@ def tracks(request):
             'likes_counter': track.likes.count(),
             'liked': liked
         })
-
-
-
     return render(request, "books/tracks.html", {
         'tracks': tracks   
         })
@@ -171,7 +170,6 @@ def create(request):
 
 
 class CommentForm(forms.ModelForm):
-
     class Meta:
         model = Comment
         fields = ('text',)
@@ -208,7 +206,6 @@ def track(request, track_id):
         'likes_counter': likes_counter,
         "form": form
     })
-
 
 
 @login_required
@@ -307,7 +304,6 @@ def like(request, track_id):
         track.save()
         return JsonResponse({"message": "Successfully liked."}, status=201)
 
-    # Post must be via PUT
     else:
         return JsonResponse({
             "error": "PUT request required."
@@ -317,7 +313,7 @@ def like(request, track_id):
 @login_required
 def profile(request, user_id):
     profile = User.objects.get(pk=user_id)
-    tracks = Track.objects.filter(reader=profile)
+    tracks = Track.objects.filter(reader=profile, is_published=True)
 
     all_books = Book.objects.all()
     books = []
@@ -354,7 +350,6 @@ def favorite(request):
             book.save()
             return JsonResponse({"message": "Successfully added to favorites."}, status=201)
 
-    # Post must be via PUT
     else:
         return JsonResponse({
             "error": "PUT request required."
@@ -392,7 +387,6 @@ def join_request(request):
             book.save()
             return JsonResponse({"message": "Successfully added to requested."}, status=201)
 
-    # Post must be via PUT
     else:
         return JsonResponse({
             "error": "PUT request required."
@@ -408,3 +402,4 @@ def search(request):
 			"books": results,
 			"query": query
         })
+

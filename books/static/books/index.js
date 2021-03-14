@@ -80,5 +80,3 @@ function joinRequest(bookId) {
   return false; 
 }
 
-
-
