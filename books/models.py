@@ -4,7 +4,6 @@ from django.utils import timezone
 
 
 class User(AbstractUser):    
-    followers = models.ManyToManyField('self', symmetrical=False, blank=True)
 
     def __str__(self):
         return self.username

@@ -5,20 +5,18 @@
     <script src="{% static 'books/index.js' %}"></script>
 {% endblock %}
 
-{% block title %} Search results {% endblock %}
-
 {% block body %}
-<div class="book-list">
+    <div class="book-list">
 
-    <h4>Search results for "{{query}}"</h4>
-    <ul>
-        {% for book in books %}
-            <li>
-                <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }}</a>         
-            </li>
-        {% empty %}
-            <li>No results</li>
-        {% endfor %}
-    </ul>
-</div>
+        <h4>Search results for "{{query}}"</h4>
+        <ul>
+            {% for book in books %}
+                <li>
+                    <a href="{% url 'book' book.id %}">{{ book.author }} - {{ book.title }}</a>         
+                </li>
+            {% empty %}
+                <li>No results</li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

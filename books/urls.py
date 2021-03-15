@@ -18,16 +18,11 @@ urlpatterns = [
     path("user/<int:user_id>", views.profile, name="profile"),
     path("requested", views.requested, name="requested"),    
     path("tracks", views.tracks, name="tracks"),
-    path("search", views.search, name="search"),
-
-    
-
-        # API Routes
+    path("search", views.search, name="search"),   
     path("favorite", views.favorite, name="favorite"),
     path("join", views.join_request, name="join_request"),
     path("like/<int:track_id>", views.like, name="like")
 ]
-
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -226,7 +226,6 @@ def comment(request, track_id):
     return HttpResponseRedirect(reverse('track', args=(track.id,)))
 
 
-
 class ClaimForm(forms.ModelForm):
     book_author = forms.CharField(required=True)
     book_title = forms.CharField(required=True)   
@@ -236,9 +235,16 @@ class ClaimForm(forms.ModelForm):
         fields = ('book_author', 'book_title')
 
 def claim(request):    
-    claims = Book.objects.all().annotate(num_claims=Count('claimants')).order_by('-num_claims')
+    all_claims = Book.objects.all().annotate(num_claims=Count('claimants')).order_by('-num_claims')
+
+    claims = []
+    for book in all_claims:
+        counter = book.count_claimants()
+        if counter > 0:
+            claims.append(book)
+
     read = []
-    for track in Track.objects.all():
+    for track in Track.objects.filter(is_published=True):
         read.append(track.book)
 
     user = request.user

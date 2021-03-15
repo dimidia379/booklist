@@ -8,6 +8,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'books/styles.css' %}" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
         {% block script %}
         {% endblock %}
@@ -16,30 +19,33 @@
     <body>
 
         <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="{% url 'index' %}">I read U</a>          
-            
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">                
-                    <a class="nav-link" href="{% url 'tracks' %}">All tracks</a>
-                </li>
-                <li class="nav-item">                
-                    <a class="nav-link" href="{% url 'create' %}">Add your track</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'claim' %}">Request book</a>
-                </li>
-
-                {% if user.is_authenticated %}
+            <a class="navbar-brand" href="{% url 'index' %}">I read U</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTog" aria-controls="navbarTog" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>          
+            <div class="collapse navbar-collapse" id="navbarTog">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item">                
+                        <a class="nav-link" href="{% url 'tracks' %}">All tracks</a>
+                    </li>
+                    <li class="nav-item">                
+                        <a class="nav-link" href="{% url 'create' %}">Add your track</a>
+                    </li>
                     <li class="nav-item">
-                        <a data-userid="{{ user.id }}" id="profile-link" class="nav-link" href="{% url 'profile' user.id %}">Profile</a>                        
+                        <a class="nav-link" href="{% url 'claim' %}">Request book</a>
+                    </li>
+
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" data-userid="{{ user.id }}" id="profile-link" href="{% url 'profile' user.id %}">Profile</a>                        
                     </li>                
                     
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">Log out</a>
                     </li>
-                {% endif %}
+                    {% endif %}
 
-                {% if not user.is_authenticated %}
+                    {% if not user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'login' %}">Log in</a>
                     </li>
@@ -47,18 +53,17 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'register' %}">Register</a>
                     </li>
-                {% endif %}
-            </ul>
-            <form action="{% url 'search' %}" class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search book" aria-label="Search" name="q">
-                <button id="search-btn" class="btn" type="submit">Search</button>
-            </form>            
-        </nav>
-        
+                    {% endif %}                    
+                </ul>
+                <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search book" aria-label="Search" name="q">
+                    <button id="search-btn" class="btn" type="submit">Search</button>
+                </form>   
+            </div>         
+        </nav>        
         <div class="body">
             {% block body %}
             {% endblock %}
-        </div> 
-    
+        </div>     
     </body>
 </html>

@@ -1,7 +1,9 @@
 # I read U
 
 CS50 Web Programming with Python and JavaScript Final Project (Capstone).
-This is a website build using Django, HTML (with Bootstrap 4), CSS and some JavaScript.  The main functionality is listening audiobooks. Every registered user also can upload his own audiobook created by him. So users can read books to each other. I believe that this project satisfies the distinctiveness and complexity requirements mentioned for the capstone project. It contains the next features:
+This is a website build using Django, HTML (with Bootstrap 4), CSS and some JavaScript.  The main functionality is listening audiobooks. Every registered user also can upload his own audiobook created by him. So users can read books to each other. I believe that this project satisfies the distinctiveness and complexity requirements mentioned for the capstone project. I use some features from my previous projects and try some new like mobile responsive collapsed navbar, using audioplayer, searching and premoderation.  
+
+It contains the next features:
 - registered user can upload audiofile and it appears in main tracklist after premoderation by admin
 - if user is admin, he can see number of tracks awating premoderation on the main page
 - for every published track user can like/unlike it,  leave comments, see other tracks for this book or see other books of this book's author, go to the profile of user created track
@@ -31,7 +33,7 @@ File views.py contains the next views:
 - search
 
 Here are all the templates:
-- **layout.html** This page contains navbar including search panel.
+- **layout.html** This page contains navbar including search panel. Navbar is mobile responsive.
 - **login.html** Page for login.
 - **register.html** Page for registration.
 - **index.html** The main page with links to all tracks, uploading own track, registration or login . Also it provide information about number of tracks on premoderation for the site admin.

@@ -5,67 +5,67 @@
     <script src="{% static 'books/index.js' %}"></script>
 {% endblock %}
 
-{% block title %} {{ track.book }} {% endblock %}
-
 {% block body %}
-<div class="tracklist">
+    <div class="tracklist">
 
-    <div id={{ track.id }} class="track-box track-box-track">
-                
-        <img class="book-img" src="{{ track.image.url}}" alt="{{ track.chapter }}" width="100px" height="100px">
-        <a href="{% url 'writer' writer_id %}">{{ track.book.author }}</a><br>
-        <a href="{% url 'book' book_id %}">{{ track.book.title }}</a>
-        <div id="bookId" data-bookid="{{ book_id }}"></div>
+        <div id={{ track.id }} class="track-box track-box-track">
+                    
+            <img class="book-img" src="{{ track.image.url}}" alt="{{ track.chapter }}" width="100px" height="100px">
+            <a href="{% url 'writer' writer_id %}">{{ track.book.author }}</a><br>
+            <a href="{% url 'book' book_id %}">{{ track.book.title }}</a>
+            <div id="bookId" data-bookid="{{ book_id }}"></div>
 
 
-        {% if user.is_authenticated %}
-            {% if book_in_favs %}
-                <div style="font-style: italic;">Book In Favorites</div>
-            {% else %}
-                <button class="btn btn-primary" id="favorites-btn" onclick="favorite()">Add Book to Favorites</button>
+            {% if user.is_authenticated %}
+                {% if book_in_favs %}
+                    <div style="font-style: italic;">Book In Favorites</div>
+                {% else %}
+                    <button class="btn btn-primary" id="favorites-btn" onclick="favorite()">Add Book to Favorites</button>
+                {% endif %}
             {% endif %}
-        {% endif %}
-        
-        <div> Chapter: {{ track.chapter }} </div>
-        <div>
-            {% if track.is_published %}
-                <audio controls="controls" controlsList="nodownload">
-                    <source src="{{ track.audio.url }}"  />
-                </audio>
-            {%else%}
-                <p>Please be patient, track is on premoderation.</p>
-            {% endif %}
-        </div>
-        <div>                       
-            <p>Created by <a href="{% url 'profile' user_id %}">{{ track.reader }}</a> {{ track.create_date }}</p>                        
-        </div>
-        
-        {% if liked %}
-            <button data-status="liked" data-id="{{ track.id }}" class="like-active like-toggle" id="like-btn-{{ track.id }}">♥</button>
-        {% else %}
-            <button data-status="not-liked" data-id="{{ track.id }}" class="like-toggle" id="like-btn-{{ track.id }}">♥</button>
-        {% endif %}
-
-        <span class="counter" id="like-cnt-{{ track.id }}">{{ likes_counter }}</span>    
-        
-      </div>
-        <div class="comments"> Comments:
-            {% if comments %}
-                {% for comment in comments %}
-            <li><strong>{{ comment.create_date }} by {{ comment.user }}:</strong> {{ comment.text }}</li>
-                {% endfor %}
-            {% endif %}
-        </div>
-
-        {% if user.is_authenticated %}
-            <div class="add-comment">
-                <form class="comment-form" action="{% url 'comment' track.id %}"  method='POST'>
-                    {% csrf_token %}
-                    {{ form|safe }}
-                    <input id="comment-btn" class="btn btn-primary" type="submit" value="Add comment">
-                </form>
+            
+            <div> Chapter: {{ track.chapter }} </div>
+            <div>
+                {% if track.is_published %}
+                    <audio controls="controls" controlsList="nodownload" preload="auto">
+                        <source src="{{ track.audio.url }}" type="audio/ogg"/>
+                        <source src="{{ track.audio.url }}" type="audio/mpeg"/>
+                        <source src="{{ track.audio.url }}" type="audio/flac"/>
+                        <p>Your browser does not support the audio element.</p>
+                    </audio>
+                {%else%}
+                    <p>Please be patient, track is on premoderation.</p>
+                {% endif %}
             </div>
-        {% endif %}
-</div>
+            <div>                       
+                <p>Created by <a href="{% url 'profile' user_id %}">{{ track.reader }}</a> {{ track.create_date }}</p>                        
+            </div>
+            
+            {% if liked %}
+                <button data-status="liked" data-id="{{ track.id }}" class="like-active like-toggle" id="like-btn-{{ track.id }}">♥</button>
+            {% else %}
+                <button data-status="not-liked" data-id="{{ track.id }}" class="like-toggle" id="like-btn-{{ track.id }}">♥</button>
+            {% endif %}
 
+            <span class="counter" id="like-cnt-{{ track.id }}">{{ likes_counter }}</span>    
+            
+        </div>
+            <div class="comments"> Comments:
+                {% if comments %}
+                    {% for comment in comments %}
+                <li><strong>{{ comment.create_date }} by {{ comment.user }}:</strong> {{ comment.text }}</li>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            {% if user.is_authenticated %}
+                <div class="add-comment">
+                    <form class="comment-form" action="{% url 'comment' track.id %}"  method='POST'>
+                        {% csrf_token %}
+                        {{ form|safe }}
+                        <input id="comment-btn" class="btn btn-primary" type="submit" value="Add comment">
+                    </form>
+                </div>
+            {% endif %}
+    </div>
 {% endblock %}

@@ -6,15 +6,10 @@
     <script src="{% static 'books/index.js' %}"></script>
 {% endblock %}
 
-{% block title %} Claim {% endblock %}
-
 {% block body %}
 <div id="request-body">
     <h1>Book you want to hear</h1>
-
-
         {% if user.is_authenticated %}
-
         <div>
             <form action="{% url 'claim' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -22,12 +17,9 @@
                 <input class="btn btn-primary" type="submit" value="Request">
             </form>
         </div>
-
-
         {% else %}
         <h5>You need to <a href="{% url 'login' %}"> Log in</a> to make requests.</h5>
         {% endif %}
-
 
         <div id="claims">
             <h3>Most waiting books</h3>
@@ -43,8 +35,8 @@
                     <li>No claimed books yet.</li>
                 {% endfor %}
             </ul>
-
-            <a id="see-all-req" href="{% url 'requested' %}">See all requested books and join to requests</a>   
+            <a id="see-all-req" class="btn btn-primary" href="{% url 'requested' %}">See all requested books and join to requests</a>
+        </div>
 </div>
     
 {% endblock %}

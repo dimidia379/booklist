@@ -12,12 +12,11 @@
     <ul style="text-align: center;" class="tracklist">
         {% for track in tracks %}
             <li data-id={{ track.id }} class="track-box">
-                <a href="{% url 'track' track.id %}">
-               
+                <a href="{% url 'track' track.id %}">               
                     <img class="book-img" src="{{ track.image}}" alt="{{ track.chapter }}" >
                     <p> {{ track.author }} - {{ track.title }} </p>       
                     <p> Chapter {{ track.chapter }} </p>
-                    <p>Reader: {{ track.reader }}</p>
+                    <p> Reader: {{ track.reader }}</p>
                 </a>
 
                 {% if track.liked %}
@@ -26,18 +25,10 @@
                     <button data-status="not-liked" data-id="{{ track.id }}" class="like-toggle" id="like-btn-{{ track.id }}">♥</button>
                 {% endif %}
 
-                <span class="counter" id="like-cnt-{{ track.id }}">{{ track.likes_counter }}</span>                 
-                
+                <span class="counter" id="like-cnt-{{ track.id }}">{{ track.likes_counter }}</span>               
             </li>
         {% empty %}
             <li>No tracks yet.</li>
         {% endfor %}
     </ul>
-
-
-   
-
-    </div>
-
-
 {% endblock %}

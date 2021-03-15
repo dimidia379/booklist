@@ -6,34 +6,28 @@
 {% endblock %}
 
 {% block body %}
-
-
-<div id="main-page">
-    <div id="main-logo">
-        I read U
-    </div>
-    <div class="main-link">
-        <a href="{% url 'tracks' %}">Listen</a>
-    </div>
-    <div class="main-link">
-        <a href="{% url 'create' %}">Add your record</a>
-    </div>
-    {% if not user.is_authenticated %}
-        <div class="main-link">
-            <a href="{% url 'login' %}">Log In</a>
+    <div id="main-page">
+        <div id="main-logo">
+            I read U
         </div>
         <div class="main-link">
-            <a href="{% url 'register' %}">Register</a>
+            <a href="{% url 'tracks' %}">Listen</a>
         </div>
-    {% endif %}
-    {% if user.is_superuser %}
         <div class="main-link">
-            {{ new_tracks }} track(s) are waiting to publish!
+            <a href="{% url 'create' %}">Add your record</a>
         </div>
-    {% endif %}
-    
-</div>
-
-
-
+        {% if not user.is_authenticated %}
+            <div class="main-link">
+                <a href="{% url 'login' %}">Log In</a>
+            </div>
+            <div class="main-link">
+                <a href="{% url 'register' %}">Register</a>
+            </div>
+        {% endif %}
+        {% if user.is_superuser %}
+            <div class="main-link">
+                {{ new_tracks }} track are waiting to publish!
+            </div>
+        {% endif %}    
+    </div>
 {% endblock %}

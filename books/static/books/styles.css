@@ -48,6 +48,10 @@ a:hover {
   text-decoration: none;
 } 
 
+audio:focus {
+  outline: none;
+} 
+
 form.comment-form {
   padding: 5px;
   margin: 5px;
@@ -58,12 +62,6 @@ form.comment-form {
   
 form.comment-form>textarea {
     width: 100%;
-}
-
-.join-btn {
-  border: none;
-  background-color: transparent;
-  font-weight: bold;
 }
 
 img.book-img {
@@ -79,12 +77,7 @@ img.book-img {
 }
 
 nav.navbar {
-  background-color: #ddc8dd;
   margin-bottom: 30px;
-  background-image: url("imgs/yep.jpg"); 
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: 100% 100%;
   font-family: 'Amatic SC', cursive; 
   font-size: 30px;
   font-weight: bold;
@@ -157,11 +150,6 @@ nav.navbar {
 
 #claims {
   margin-top: 50px;
-}
-
-#see-all-req {
-  padding: 5px;
-  border: 1px solid grey;
 }
 
 #profile-title {

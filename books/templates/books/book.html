@@ -5,8 +5,6 @@
     <script src="{% static 'books/index.js' %}"></script>
 {% endblock %}
 
-{% block title %} {{ book.title }} {% endblock %}
-
 {% block body %}
 <div id="book-page">
     <div>
@@ -20,7 +18,7 @@
             {% if user in book.favorites.all %}
                 <div style="font-style: italic;">Book In Favorites</div>
             {% else %}
-                <button id="favorites-btn" onclick="favorite()">Add Book to Favorites</button>
+                <button id="favorites-btn" class="btn btn-primary" onclick="favorite()">Add Book to Favorites</button>
             {% endif %}
         {% endif %}       
     </div>
@@ -30,27 +28,24 @@
         <ul class="book-tracks">
             {% for track in tracks %}
                 <li id={{ track.id }}>
-                    <a href="{% url 'track' track.id %}">
-                
-                        
+                    <a href="{% url 'track' track.id %}">               
                         <p> Chapter: {{ track.chapter }} </p>
-                        <p>Created by {{ track.reader }} {{track.create_date}}</p>
-                    
+                        <p>Created by {{ track.reader }} {{track.create_date}}</p>                    
                     </a>
                 </li>
             {% empty %}
                 <li>No tracks yet.</li>
-
-                {% if user.is_authenticated %}
-                    {% if user in book.claimants.all %}
-                        <div>Waiting by {{ book.count_claimants }} user(s).</div>
-                        <div data-status="joined" data-id="{{ book.id }}">In your waiting list</div>
-                    {% else %}
-                        <button onclick ="joinRequest(this.dataset.id)" class="join-btn" data-status="not-joined" data-id="{{ book.id }}">Add to your waiting list</button>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
+            {% endfor %}    
         </ul>
+
+        {% if not tracks and user.is_authenticated %}
+            {% if user in book.claimants.all %}
+                <div>Waiting by {{ book.count_claimants }} user(s).</div>
+                <div data-status="joined" data-id="{{ book.id }}">In your waiting list</div>
+            {% else %}
+                <button onclick ="joinRequest(this.dataset.id)" class="btn btn-primary" data-status="not-joined" data-id="{{ book.id }}">Add to your waiting list</button>
+            {% endif %}
+        {% endif %}        
     </div>
 </div>
 {% endblock %}
