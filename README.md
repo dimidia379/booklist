@@ -51,5 +51,7 @@ Here are all the templates:
 - Execute: "python -m pip install Django"
 - Go in the root folder of the project, execute: "python manage.py runserver"
 
+Watch this project in action: https://youtu.be/wsn6xtWwb-M
+
 
 
